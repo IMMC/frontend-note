@@ -113,10 +113,9 @@ function updateHostComponent(fiber) {
   reconcileChildren(fiber, elements);
 }
 /**
- * @description 需要完成 3步
- * step1: 把当前fiber 对应的节点 添加到 dom中
- * step2: 为子元素创建 fiber
- * step3： 返回需要处理的 下一个 fiber
+ * @description
+ * step1: 为子元素创建 fiber
+ * step2： 返回需要处理的 下一个 fiber
  */
 function performUnitOfWork(fiber) {
   // 处理 function component
@@ -331,7 +330,7 @@ function createElement(type, props, ...children) {
   return {
     type,
     props: {
-      props,
+      ...props,
       children: children.map(child =>
         typeof child === 'object' ? child : createTextElement(child)
       )
