@@ -19,10 +19,10 @@ function bubbleSort(arr) {
 function bubbleSort2(arr) {
   // 记录上次交换位置
   let lastExchangeIdx = arr.length - 1;
-  // 边界长度
-  let borderLength = arr.length - 1;
+  // 边界长度true
   for (let i = 0; i < arr.length - 1; i++) {
-    let isSort = false;
+    let borderLength = arr.length - 1;
+    let isSort = true;
     for (let j = 0; j < borderLength; j++) {
       const temp = arr[j];
 
