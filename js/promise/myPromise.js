@@ -33,19 +33,6 @@ function myPromise(fn) {
 }
 
 myPromise.prototype.then = function(onFullFilled, onRejected) {
-  var fullFillFn =
-    typeof onFullFilled === 'function'
-      ? onFullFilled
-      : function(v) {
-          return v;
-        };
-  var rejectFn =
-    typeof onRejected === 'function'
-      ? onRejected
-      : function(e) {
-          return e;
-        };
-
   var self = this;
 
   if (this.status === 'pending') {
@@ -53,14 +40,20 @@ myPromise.prototype.then = function(onFullFilled, onRejected) {
       // 还未决议
       self.onFulfilledCallback.push(function(value) {
         try {
-          var x = fullFillFn(value);
+          var x;
+          // 保证值传递
+          if (typeof onFullFilled === 'function') {
+            x = onFullFilled(value);
+          } else {
+            resolve(value);
+            return;
+          }
 
           if (x instanceof myPromise) {
             // 返回值如果是 promise，就把当前 return 的promise的 resolve 传递给这个 promise, 保证链式调用
             x.then(resolve, reject);
             return;
           }
-
           resolve(x);
         } catch (err) {
           reject(err);
@@ -69,12 +62,18 @@ myPromise.prototype.then = function(onFullFilled, onRejected) {
 
       self.onRejectedCallback.push(function(value) {
         try {
-          var x = rejectFn(value);
+          var x;
+          if (typeof onRejected === 'function') {
+            x = onRejected(value);
+          } else {
+            reject(value);
+            return;
+          }
 
           if (x instanceof myPromise) {
             x.then(resolve, reject);
           }
-          // 根据规范，如果 onFullFilled, onRejected 返回了一个值 then 方法就要返回 [[Resolve]](promise2, x)
+          // 根据规范，如果 onFullFilled, onRejected 返回了一个值, then 方法就要返回 [[Resolve]](promise2, x)
           resolve(x);
         } catch (err) {
           reject(err);
@@ -86,7 +85,14 @@ myPromise.prototype.then = function(onFullFilled, onRejected) {
   if (this.status === 'resolved') {
     return new myPromise(function(resolve, reject) {
       try {
-        var x = fullFillFn(self.data);
+        var x;
+        // 保证值传递
+        if (typeof onFullFilled === 'function') {
+          x = onFullFilled(value);
+        } else {
+          resolve(value);
+          return;
+        }
 
         if (x instanceof myPromise) {
           // 返回值如果是 promise，就把当前 return 的promise的 resolve 传递给这个 promise, 保证链式调用
@@ -104,7 +110,13 @@ myPromise.prototype.then = function(onFullFilled, onRejected) {
   if (this.status === 'reject') {
     return new myPromise(function(resolve, reject) {
       try {
-        var x = rejectFn(self.data);
+        var x;
+        if (typeof onRejected === 'function') {
+          x = onRejected(value);
+        } else {
+          reject(value);
+          return;
+        }
 
         if (x instanceof myPromise) {
           x.then(resolve, reject);
@@ -163,46 +175,14 @@ myPromise.resolve = function(value) {
   }
 
   if (typeof value === 'object' && typeof value.then === 'function') {
+    return new myPromise((resolve, reject) => {
+      value.then(resolve, reject);
+    });
   }
+
+  return new myPromise((resolve, reject) => {
+    resolve(value);
+  });
 };
 
-// test code
-new myPromise((resolve, reject) => {
-  setTimeout(() => {
-    resolve(2);
-  }, 1000);
-}).then(data => {
-  console.log('resolve data: ', data);
-});
-
-new myPromise((resolve, reject) => {
-  setTimeout(() => {
-    resolve(3);
-  }, 1000);
-})
-  .then()
-  .then()
-  .then(data => {
-    console.log(data);
-  });
-
-// promise all
-
-const promise1 = 1;
-const promise2 = new myPromise((resolve, reject) => {
-  resolve(6);
-});
-const promise3 = new myPromise((resolve, reject) => {
-  setTimeout(() => {
-    reject('test');
-  }, 2000);
-});
-
-const p = myPromise.all([promise1, promise2, promise3]).then(
-  val => {
-    console.log(val);
-  },
-  err => {
-    console.log('error result: ', err);
-  }
-);
+module.exports = myPromise;
