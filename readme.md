@@ -18,4 +18,17 @@
 
 ## 算法
 
--[基础排序算法](https://github.com/IMMC/frontend-note/tree/master/algorithm/sort)
+- [基础排序算法](https://github.com/IMMC/frontend-note/tree/master/algorithm/sort)
+
+## js
+
+### js 模块化
+
+- [不同的模块化标准](https://github.com/IMMC/frontend-note/tree/master/js/module)
+- [esm 为什么可以引用 cjs](https://github.com/IMMC/frontend-note/blob/master/js/module/defaultExport.md)
+- [import 的分裂: 解释 typescript import 的困惑](https://github.com/IMMC/frontend-note/blob/master/js/module/typescriptModule.md)
+
+### 异步编程
+
+- [my promise](https://github.com/IMMC/frontend-note/blob/master/js/promise/myPromise.js)
+- [generatorRunner](https://github.com/IMMC/frontend-note/blob/master/js/promise/generatorRunner.js)
