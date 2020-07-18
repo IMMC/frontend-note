@@ -2,7 +2,7 @@
  * 选择排序
  * 在未排序的序列中寻找最小的值，放在起始位置。此时起始位置是有序的，对后面未排序序列重复此步骤，直到有序。
  */
-function selectionSort(arr) {
+export default function selectionSort(arr) {
   let minIdx = 0;
   let temp = 0;
   for (let i = 0; i < arr.length - 1; i++) {
@@ -23,5 +23,3 @@ function selectionSort(arr) {
 
   return arr;
 }
-
-console.log(selectionSort([90, 20, -10, 9, 9, 0]));

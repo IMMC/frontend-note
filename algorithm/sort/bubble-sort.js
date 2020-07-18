@@ -1,4 +1,4 @@
-function bubbleSort(arr) {
+export function bubbleSort(arr) {
   for (let i = 0; i < arr.length - 1; i++) {
     for (let j = 0; j < arr.length - i - 1; j++) {
       const temp = arr[j];
@@ -16,7 +16,7 @@ function bubbleSort(arr) {
  * @param {*} arr
  * 优化冒泡排序
  */
-function bubbleSort2(arr) {
+export function bubbleSort2(arr) {
   // 记录上次交换位置
   let lastExchangeIdx = arr.length - 1;
   // 边界长度true
@@ -49,7 +49,7 @@ function bubbleSort2(arr) {
  * @param {*} arr
  * 先正向进行排序，结束后逆向进行排序
  */
-function cocktailSort(arr) {
+export function cocktailSort(arr) {
   let lastRightSortIdx = arr.length - 1;
   let lastLeftSortIdx = 0;
   let rightSortLength = arr.length - 1;
@@ -98,8 +98,3 @@ function cocktailSort(arr) {
 
   return arr;
 }
-
-// test code
-console.log(bubbleSort([8, 6, 38, 0, 10]));
-console.log(bubbleSort2([8, 6, 38, 0, 10]));
-console.log(cocktailSort([8, 6, 38, 0, 9, -8, 29, 10, 90]));

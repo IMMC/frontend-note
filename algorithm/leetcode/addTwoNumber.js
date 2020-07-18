@@ -3,7 +3,7 @@ function ListNode(val) {
   this.next = null;
 }
 
-var addTwoNumbers = function(l1, l2) {
+const addTwoNumbers = function(l1, l2) {
   let l1Head = l1;
   let l2Head = l2;
   let p1 = new ListNode();

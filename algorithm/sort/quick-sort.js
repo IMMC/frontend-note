@@ -3,7 +3,7 @@
  *  快速排序的平均时间复杂度为 O(nlogn) 最坏情况下 会达到 o(n^2)
  * @param {*} arr
  */
-function quickSort(arr) {
+export default function quickSort(arr) {
   if (arr.length < 2) return arr;
 
   const mid = parseInt((arr.length - 1) / 2, 10);
@@ -20,5 +20,3 @@ function quickSort(arr) {
 
   return [].concat(quickSort(minArr), arr[mid], quickSort(maxArr));
 }
-
-console.log(quickSort([90, 20, -10, 9, 9, 0]));
