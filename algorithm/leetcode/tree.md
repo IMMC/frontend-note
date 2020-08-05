@@ -126,6 +126,35 @@ function postOrder2(root) {
 }
 ```
 
+### 广度优先遍历
+
+使用队列的形式，进行深度优先遍历
+
+```javascript
+function BFS(root) {
+  const queue = [root];
+  const result = [];
+  let current = null;
+
+  while (queue.length) {
+    current = queue.shift();
+    result.push(current.val);
+    if (current.left) {
+      queue.push(current.left);
+    }
+    if (current.right) {
+      queue.push(current.right);
+    }
+  }
+
+  return result;
+}
+```
+
+### 深度优先遍历
+
+实现上，其实前序遍历就是深度优先遍历。
+
 ## 寻找子节点路径
 
 > 假设一个二叉树，元素都不重复，给定一个值，求得根节点到这个值的访问路径。
@@ -184,5 +213,75 @@ const lowestCommonAncestor = function(root, p, q) {
   }
 
   return pPath[publicNodeVal];
+};
+```
+
+### 二叉树层级遍历
+
+题目[层级遍历](https://leetcode-cn.com/problems/binary-tree-level-order-traversal/)
+
+> 广度优先遍历的形式。一层一层处理
+
+```javascript
+var levelOrder = function(root) {
+  if (!root) return [];
+  let queue = [root];
+  const result = [];
+  let tempArr = [];
+  let tempResult = [];
+  let current = null;
+
+  while (queue.length) {
+    while (queue.length) {
+      current = queue.shift();
+      tempResult.push(current.val);
+      if (current.left) {
+        tempArr.push(current.left);
+      }
+
+      if (current.right) {
+        tempArr.push(current.right);
+      }
+    }
+
+    result.push(tempResult);
+    queue = tempArr;
+    tempArr = [];
+    tempResult = [];
+  }
+
+  return result;
+};
+```
+
+> 深度优先遍历形式
+
+```javascript
+var levelOrder = function(root) {
+  let stack = [];
+  const result = [];
+  let current;
+  let i = 0;
+  while (root || stack.length) {
+    while (root) {
+      if (!result[i]) {
+        result[i] = [];
+      }
+      result[i].push(root.val);
+      stack.push({ node: root, level: i });
+      root = root.left;
+      if (root) i++;
+    }
+
+    current = stack.pop();
+    root = current.node.right;
+    if (root) {
+      i++;
+    } else {
+      i = stack.length > 0 ? stack[stack.length - 1].level : 0;
+    }
+  }
+
+  return result;
 };
 ```

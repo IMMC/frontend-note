@@ -31,3 +31,40 @@ var lengthOfLongestSubstring = function(s) {
   return maxLength;
 };
 ```
+
+## 最长公共前缀
+
+题目： [最长公共前缀](https://leetcode-cn.com/problems/longest-common-prefix/)
+
+> 横向进行比对，找最长公共前缀
+
+```javascript
+var longestCommonPrefix = function(strs) {
+  if (strs.length < 1) return '';
+  let prefix = '';
+
+  for (let i = 0; i < strs[0].length; i++) {
+    for (let j = 0; j < strs.length; j++) {
+      if (!strs[j][i] || strs[j][i] !== strs[0][i]) return prefix;
+    }
+    prefix += strs[0][i];
+  }
+
+  return prefix;
+};
+```
+
+## pow
+
+题目: [实现 pow(x, n) ，即计算 x 的 n 次幂函数](https://leetcode-cn.com/problems/powx-n/)
+
+> 采用分治法求解。
+
+```javascript
+var myPow = function(x, n) {
+  if (n === 0) return 1;
+  if (n < 0) return 1 / myPow(x, -n);
+  if (n % 2) return x * myPow(x, n - 1);
+  return myPow(x * x, n / 2);
+};
+```
