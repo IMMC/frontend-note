@@ -216,6 +216,32 @@ const lowestCommonAncestor = function(root, p, q) {
 };
 ```
 
+### 寻找二叉搜索树的最近公共父元素
+
+leetCode 235 题 [二叉搜索树的最近公共祖先](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-search-tree/)
+
+> 利用二叉搜索树的特性，当出现分叉时，即一个节点处于中间时，这个节点就是答案。
+
+```javascript
+var lowestCommonAncestor = function(root, p, q) {
+  while (root) {
+    if (Math.max(p.val, q.val) < root.val) {
+      root = root.left;
+      continue;
+    }
+
+    if (Math.min(p.val, q.val) > root.val) {
+      root = root.right;
+      continue;
+    }
+
+    return root;
+  }
+
+  return root;
+};
+```
+
 ### 二叉树层级遍历
 
 题目[层级遍历](https://leetcode-cn.com/problems/binary-tree-level-order-traversal/)
@@ -280,6 +306,51 @@ var levelOrder = function(root) {
     } else {
       i = stack.length > 0 ? stack[stack.length - 1].level : 0;
     }
+  }
+
+  return result;
+};
+```
+
+### 二叉树最大深度
+
+leetCode 题目[最大深度](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/)
+
+> 1. 第一种，使用递归的形式，求得左右子树的最大深度，取最大值，以此递归直到结束
+
+```javascript
+var maxDepth(root) {
+  if (!root) return 0;
+
+  return 1 + Math.max(MaxDepth(root.left), MaxDepth(root.right));
+}
+```
+
+> 2. 使用 BFS 的形式，按层遍历取最大值
+
+```javascript
+var maxDepth = function(root) {
+  if (!root) return 0;
+  let queue = [root];
+  let result = 0;
+  let tempQueue = [];
+  let current = null;
+
+  while (queue.length) {
+    result++;
+    while (queue.length) {
+      current = queue.pop();
+      if (current.left) {
+        tempQueue.push(current.left);
+      }
+
+      if (current.right) {
+        tempQueue.push(current.right);
+      }
+    }
+
+    queue = tempQueue;
+    tempQueue = [];
   }
 
   return result;
