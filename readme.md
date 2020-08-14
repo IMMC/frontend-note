@@ -1,6 +1,6 @@
 # frontend
 
-个人前端学习的一点总结==！现在有的还很少，希望能越来越多。
+算法，前端基础知识等积累。
 
 ## 目前有的
 
@@ -19,8 +19,14 @@
 ## 算法
 
 - [基础排序算法](https://github.com/IMMC/frontend-note/tree/master/algorithm/sort)
+- leetCode
+  - [链表](https://github.com/IMMC/frontend-note/blob/master/algorithm/leetcode/link.md)
+  - [树](https://github.com/IMMC/frontend-note/blob/master/algorithm/leetcode/tree.md)
+  - [tencent](https://github.com/IMMC/frontend-note/blob/master/algorithm/leetcode/tencent.md)
 
 ## js
+
+- [继承](https://github.com/IMMC/frontend-note/blob/master/js/base/inherit.md)
 
 ### js 模块化
 

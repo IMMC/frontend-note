@@ -68,3 +68,47 @@ var myPow = function(x, n) {
   return myPow(x * x, n / 2);
 };
 ```
+
+## 三数之和
+
+题目： 给一个数组，求的所有三个数相加为 0 的组合。[三数之和](https://leetcode-cn.com/problems/3sum/)
+
+> 求所有集合，避免不了对所有结果的三层遍历。但是可以对这三层遍历进行优化以达到加速的功能。 先对数组进行排序，然后第一层遍历，假设下标为 a。 那么剩下两层遍历就是求两数之和为 -nums[a] 的值。 然后可以把第二层和第三层遍历一次完成。使用双指针。第二层起始位置为 b = a + 1, 第三层起始位置 c 为 nums.length - 1, 那里面两层遍历可以看做是 b 和 c 逼近求得-nums[a]。
+
+```javascript
+var threeSum = function(nums) {
+  const result = [];
+  nums = nums.sort((v1, v2) => v1 - v2);
+
+  for (let i = 0; i < nums.length; i++) {
+    // 在i之前，已经匹配过的，不需要再匹配
+    if (i > 0 && nums[i] === nums[i - 1]) {
+      continue;
+    }
+
+    const target = -nums[i];
+    let c = nums.length - 1;
+    for (let j = i + 1; j < nums.length; j++) {
+      if (j > i + 1 && nums[j] === nums[i]) {
+        continue;
+      }
+
+      // 从最后一位往前找，直到找到等于或小于目标值的组合
+      while (j < c && nums[j] + nums[c] > target) {
+        c--;
+      }
+
+      // 两个位置重叠，由于是递增数列，没必要继续循环直接退出
+      if (j === c) {
+        break;
+      }
+
+      if (nums[j] + nums[c] === target) {
+        result.push([num[i], nums[j], nums[c]]);
+      }
+    }
+  }
+
+  return result;
+};
+```

@@ -103,3 +103,34 @@ var addTwoNumbers = function(l1, l2) {
   return lastNode;
 };
 ```
+
+## 合并有序链表
+
+leetcode 21 题 [合并有序链表](https://leetcode-cn.com/problems/merge-two-sorted-lists/)
+
+```javascript
+var mergeTwoLists = function(l1, l2) {
+  const head = new ListNode();
+  let prevNode = head;
+
+  while (l1 && l2) {
+    while (l2 && l2.val < l1.val) {
+      prevNode.next = l2;
+      prevNode = l2;
+      l2 = l2.next;
+    }
+
+    prevNode.next = l1;
+    prevNode = l1;
+    l1 = l1.next;
+  }
+
+  if (l1) {
+    prevNode.next = l1;
+  } else if (l2) {
+    prevNode.next = l2;
+  }
+
+  return head.next;
+};
+```
