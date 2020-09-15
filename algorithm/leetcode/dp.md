@@ -69,7 +69,7 @@ const minimumTotal = triangle => {
   for (let i = 1; i < triangle.length; i++) {
     dp[i] = [];
     dp[i][0] = triangle[i - 1][0];
-    for (var j = 1; j < triangle.length - 1; j++) {
+    for (var j = 1; j < triangle[i].length - 1; j++) {
       dp[i][j] = Math.min(d[i - 1][j], de[i - 1][j - 1]) + triangle[i][j];
     }
 

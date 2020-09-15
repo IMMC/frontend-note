@@ -104,7 +104,7 @@ var threeSum = function(nums) {
       }
 
       if (nums[j] + nums[c] === target) {
-        result.push([num[i], nums[j], nums[c]]);
+        result.push([nums[i], nums[j], nums[c]]);
       }
     }
   }
