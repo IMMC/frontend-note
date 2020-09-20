@@ -106,3 +106,32 @@ var exist = function(board, word) {
   return false;
 };
 ```
+
+## 全排列
+
+给定一个 没有重复 数字的序列，返回其所有可能的全排列。
+
+```javascript
+var permute = function(nums) {
+  const result = [];
+  // visitMap 记录访问过的数字
+  const bfs = (visitMap, tempArr) => {
+    if (tempArr.length === nums.length) {
+      result.push(tempArr);
+      return;
+    }
+    for (let i = 0; i < nums.length; i++) {
+      if (!visitMap[nums[i]]) {
+        // 这里注意， 解构传入全新的 object 和 array , 避免影响全局
+        bfs({ ...visitMap, [nums[i]]: true }, [...tempArr, nums[i]]);
+      }
+    }
+  };
+
+  for (let i = 0; i < nums.length; i++) {
+    bfs({ [nums[i]]: true }, [nums[i]]);
+  }
+
+  return result;
+};
+```
