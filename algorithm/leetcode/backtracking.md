@@ -6,7 +6,7 @@ leetcode 原题: [电话号码组合](https://leetcode-cn.com/problems/letter-co
 
 键盘上每一个数字对应一组英文字符，输入数字求所有的字母组合方式。
 
-我们可以采用 bfs 回溯的形式来解决问题，先深度优先遍历到结尾，存入结果，然后回溯到上一步还未使用的字母继续 bfs, 遍历结束后，得到结果。
+我们可以采用 dfs 回溯的形式来解决问题，先深度优先遍历到结尾，存入结果，然后回溯到上一步还未使用的字母继续 bfs, 遍历结束后，得到结果。
 
 ```javascript
 var letterCombinations = function(digits) {
@@ -26,18 +26,18 @@ var letterCombinations = function(digits) {
   const digitsArr = digits.split('').map(item => numStrMap[+item]);
   const result = [];
 
-  const bfs = (currI, tempArr) => {
+  const dfs = (currI, tempArr) => {
     if (tempArr.length === digitsArr.length) {
       result.push(tempArr.join(','));
     }
     if (currI === digitsArr.length) return;
 
     for (let i = 0; i < digitsArr[currI].length; i++) {
-      bfs(currI + 1, [...tempArr, digitsArr[currI][i]]);
+      dfs(currI + 1, [...tempArr, digitsArr[currI][i]]);
     }
   };
 
-  bfs(0, []);
+  dfs(0, []);
 
   return result;
 };
@@ -115,7 +115,7 @@ var exist = function(board, word) {
 var permute = function(nums) {
   const result = [];
   // visitMap 记录访问过的数字
-  const bfs = (visitMap, tempArr) => {
+  const dfs = (visitMap, tempArr) => {
     if (tempArr.length === nums.length) {
       result.push(tempArr);
       return;
@@ -123,7 +123,7 @@ var permute = function(nums) {
     for (let i = 0; i < nums.length; i++) {
       if (!visitMap[nums[i]]) {
         // 这里注意， 解构传入全新的 object 和 array , 避免影响全局
-        bfs({ ...visitMap, [nums[i]]: true }, [...tempArr, nums[i]]);
+        dfs({ ...visitMap, [nums[i]]: true }, [...tempArr, nums[i]]);
       }
     }
   };
