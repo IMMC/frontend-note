@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "chai": "^4.2.0",
-    "mocha": "^8.0.1"
+    "mocha": "^8.0.1",
+    "tapable": "^2.0.0"
   }
 }
