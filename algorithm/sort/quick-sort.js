@@ -20,3 +20,40 @@ export default function quickSort(arr) {
 
   return [].concat(quickSort(minArr), arr[mid], quickSort(maxArr));
 }
+
+// 交换元素
+function swap(arr, i, j) {
+  const temp = arr[i];
+  arr[i] = arr[j];
+  arr[j] = temp;
+}
+
+// 找出划分的位置
+function partition(arr, left, right) {
+  const point = arr[right];
+
+  let i = left;
+  let changeP = left;
+
+  while (i < right) {
+    if (arr[i] < point) {
+      swap(arr, changeP, i);
+      changeP++;
+    }
+    i++;
+  }
+
+  swap(arr, changeP, right);
+  return changeP;
+}
+
+// 原地排序
+export function inPlaceQuickSort(arr, l, r) {
+  if (l >= r) return arr;
+  const p = partition(arr, l, r);
+
+  inPlaceQuickSort(arr, l, p - 1);
+  inPlaceQuickSort(arr, p + 1, r);
+
+  return arr;
+}
