@@ -10,7 +10,7 @@
 
 ## frontend-tools
 
-- [eslint](https://github.com/IMMC/frontend-note/tree/master/fontend-tools/eslint) 参数说明
+- [eslint](https://github.com/IMMC/frontend-note/tree/master/frontend-tools/eslint) 参数说明
 
 ## network
 
