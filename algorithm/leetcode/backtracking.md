@@ -135,3 +135,58 @@ var permute = function(nums) {
   return result;
 };
 ```
+
+## 括号生成
+
+给定一个数字，生成所有的括号组合
+
+```javascript
+var dfs = (left, right, n, str = '', result = []) => {
+  if(right === left) {
+    if(left === n) {
+      result.push(str);
+      return result;
+    }
+  }
+
+  left < n && dfs(left + 1, right, n, str + '(', result);
+  (right < n && right < left) dfs(left, right + 1, n , str + ')', result);
+
+  return result;
+}
+var gen = function(n) {
+  return dfs(0,0, n);
+}
+```
+
+## 有效的 ip 地址
+
+给定一串数字，输出所有有效的 ip 地址。每一位符合 大于等于 0 并且小于等于 255
+
+```javascript
+var dfs = (str, start, pid, ipArr, result) => {
+  if (pid === 4) {
+    if (start === str.length) {
+      result.push(ipArr.join('.'));
+    }
+    return;
+  }
+
+  if (start === str.length) return;
+
+  if (str[start] === '0') {
+    ipArr[pid] = 0;
+    dfs(str, start + 1, pid + 1, ipArr, result);
+  }
+
+  for (let i = start + 1; i < str.length + 1; i++) {
+    let curr = str.slice(start, i);
+    if (curr > 0 && curr < 256) {
+      ipArr[pid] = curr;
+      dfs(str, i, pid + 1, ipArr, result);
+    } else {
+      break;
+    }
+  }
+};
+```
