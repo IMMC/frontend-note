@@ -3,13 +3,13 @@ function myPromise(fn) {
   this.data = undefined;
   this.onFulfilledCallback = [];
   this.onRejectedCallback = [];
-  var self = this;
+  const self = this;
 
   function resolve(value) {
     if (self.status === 'pending') {
       self.data = value;
       self.status = 'resolved';
-      for (var i = 0; i < self.onFulfilledCallback.length; i++) {
+      for (let i = 0; i < self.onFulfilledCallback.length; i++) {
         self.onFulfilledCallback[i](value);
       }
     }
@@ -19,7 +19,7 @@ function myPromise(fn) {
     if (self.status === 'pending') {
       self.data = reason;
       self.status = 'reject';
-      for (var i = 0; i < self.onRejectedCallback.length; i++) {
+      for (let i = 0; i < self.onRejectedCallback.length; i++) {
         self.onRejectedCallback[i](reason);
       }
     }
@@ -33,14 +33,14 @@ function myPromise(fn) {
 }
 
 myPromise.prototype.then = function(onFullFilled, onRejected) {
-  var self = this;
+  const self = this;
 
   if (this.status === 'pending') {
     return new myPromise(function(resolve, reject) {
       // 还未决议
       self.onFulfilledCallback.push(function(value) {
         try {
-          var x;
+          let x;
           // 保证值传递
           if (typeof onFullFilled === 'function') {
             x = onFullFilled(value);
@@ -62,7 +62,7 @@ myPromise.prototype.then = function(onFullFilled, onRejected) {
 
       self.onRejectedCallback.push(function(value) {
         try {
-          var x;
+          let x;
           if (typeof onRejected === 'function') {
             x = onRejected(value);
           } else {
@@ -85,12 +85,12 @@ myPromise.prototype.then = function(onFullFilled, onRejected) {
   if (this.status === 'resolved') {
     return new myPromise(function(resolve, reject) {
       try {
-        var x;
+        let x;
         // 保证值传递
         if (typeof onFullFilled === 'function') {
-          x = onFullFilled(value);
+          x = onFullFilled(self.value);
         } else {
-          resolve(value);
+          resolve(self.value);
           return;
         }
 
@@ -110,11 +110,11 @@ myPromise.prototype.then = function(onFullFilled, onRejected) {
   if (this.status === 'reject') {
     return new myPromise(function(resolve, reject) {
       try {
-        var x;
+        let x;
         if (typeof onRejected === 'function') {
-          x = onRejected(value);
+          x = onRejected(self.value);
         } else {
-          reject(value);
+          reject(self.value);
           return;
         }
 
@@ -135,11 +135,11 @@ myPromise.prototype.catch = function(onRejected) {
 };
 
 myPromise.all = function(promiseArr) {
-  var result = [];
+  const result = [];
 
   return new myPromise((resolve, reject) => {
     try {
-      var totalFull = 0;
+      let totalFull = 0;
       for (var i = 0; i < promiseArr.length; i++) {
         if (promiseArr[i] instanceof myPromise) {
           promiseArr[i].then(

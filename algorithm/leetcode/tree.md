@@ -198,21 +198,21 @@ function findNodePath(root, target) {
 
 ```javascript
 const lowestCommonAncestor = function(root, p, q) {
-  const pPath = findNodePath(root, p);
-  const qPath = findNodePath(root, q);
+  let ans = null;
+  function dfs(tRoot, tp, tq) {
+    if (!tRoot) return false;
+    const isCurrent = tRoot.val === tp.val || tRoot.val === tq.val;
+    const isInRight = dfs(root.right, tp, tq);
+    const isInLeft = dfs(root.left, tp.tq);
 
-  let publicNodeVal = 0;
+    if ((isInRight && isInLeft) || (isCurrent && (inInLeft || isInRight))) {
+      ans = tRoot;
+    }
 
-  let i = 0;
-  let j = 0;
-  while (i < pPath.length && j < qPath.length) {
-    if (pPath[i].val !== qPath[j].val) break;
-    publicNodeVal = i;
-    i++;
-    j++;
+    return isInRight || isInLeft || isCurrent;
   }
 
-  return pPath[publicNodeVal];
+  return ans;
 };
 ```
 
@@ -354,5 +354,19 @@ var maxDepth = function(root) {
   }
 
   return result;
+};
+```
+
+### 前序 后序遍历，还原二叉树
+
+```javascript
+const reBuildTree = (arr1, arr2) => {
+  if (arr1.length === 0) return null;
+  const root = arr1[0];
+  const splitIndex = arr2.findIndex(item => item === arr1[1]);
+  root.left = reBuildTree(arr1.slice(1, splitIndex + 2), arr2.slice(0, splitIndex + 1));
+  root.right = reBuildTree(arr1.slice(splitIndex + 2), arr2.slice(splitIndex + 1));
+
+  return root;
 };
 ```

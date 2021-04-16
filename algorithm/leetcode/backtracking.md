@@ -177,6 +177,7 @@ var dfs = (str, start, pid, ipArr, result) => {
   if (str[start] === '0') {
     ipArr[pid] = 0;
     dfs(str, start + 1, pid + 1, ipArr, result);
+    return;
   }
 
   for (let i = start + 1; i < str.length + 1; i++) {

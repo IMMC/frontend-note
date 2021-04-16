@@ -109,6 +109,81 @@ var threeSum = function(nums) {
 };
 ```
 
-## 不同路径
+## 求未排序数组中第 k 大的值
 
-一个机器人在一个 mxn 的网格中，机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角。 共有多少种解法。
+基于快排的快速选择，得出结果
+
+```javascript
+const swap = (arr, left, right) => {
+  const temp = arr[left];
+  arr[left] = arr[right];
+  arr[right] = temp;
+};
+
+const partition = (arr, left, right) => {
+  const point = arr[right];
+  let changeP = left;
+
+  for (let i = left; i < arr.length; i++) {
+    if (arr[i] < point) {
+      swap(arr, changeP, i);
+      changeP++;
+    }
+  }
+
+  swap(arr, right, changeP);
+  return changeP;
+};
+
+const quickSelect = (arr, k, left, right) => {
+  const p = partition(arr, left, right);
+  if (p === k) {
+    return arr[p];
+  }
+  return p > k ? quickSelect(arr, k, left, p - 1) : quickSelect(arr, k, p + 1, right);
+};
+```
+
+## 二叉树的公共祖先
+
+可以采用 dfs 的形式寻找公共祖先。一个满足条件的公共祖先要符合以下条件： 两个值分别在左子树和右子树。
+
+```javascript
+var lowestCommonAncestor = function(root, p, q) {
+  var ans;
+
+  var dfs = (tRoot, pNode, qNode) => {
+    if (!tRoot) return false;
+    const isCurrent = tRoot.val === pNode.val || tRoot.val === qNode.val;
+    // 左子树是否包含目标值
+    const isLeft = dfs(tRoot.left, pNode, qNode);
+    const isRight = dfs(tRoot.right, pNode, qNode);
+
+    if ((isRight && isLeft) || (isCurrent && (isLeft || isRight))) {
+      ans = tRoot;
+    }
+    // 返回的结果是，子树是否包含了目标值
+    return isLeft || isRight || isCurrent;
+  };
+  dfs(root, p, q);
+  return ans;
+};
+```
+
+## 搜索二叉树的公共子元素
+
+```javascript
+var lowestCommonAncestor = function(root, p, q) {
+  while (root) {
+    // 最大值都比root 的值小，那结果一定在root 的左子树上
+    if (Math.max(p.val, q.val) < root.val) {
+      root = root.left;
+      // 最小值都比 root 值大，那结果一定在 root 的右子树上
+    } else if (Math.min(p.val, q.val) > root.val) {
+      root = root.right;
+    } else {
+      return root;
+    }
+  }
+};
+```
